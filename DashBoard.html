@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<title>DashBoard</title>
+<meta charset="UTF-8">
+<link rel="icon" href="document (1).png" type="png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="DashCSS.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        font-family: "Raleway", sans-serif
+    }
+</style>
+
+<body class="w3-light-grey">
+
+    <!-- Top container -->
+    <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+        <button class="w3-bar-item w3-button w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+        <span class="w3-bar-item w3-right">Logo</span>
+    </div>
+
+    <!-- Sidebar/menu -->
+    <nav class="w3-sidebar w3-collapse w3-white w3-animate-left w3-hide-large" style="z-index:3;width:300px;" id="mySidebar"><br>
+        <div class="w3-container">
+            <h5>Dashboard</h5>
+        </div>
+        <div class="w3-bar-block">
+            <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Overview</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Traffic</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i>  Geo</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-diamond fa-fw"></i>  Orders</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bell fa-fw"></i>  News</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  General</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>  History</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
+        </div>
+    </nav>
+
+
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+    <!-- !PAGE CONTENT! -->
+    <div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+        <!-- Header -->
+        <header class="w3-container" style="padding-top:22px">
+            <h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
+        </header>
+
+        <div class="w3-center">
+            <h1>CSV Viewer</h1>
+            <input class="w3-button w3-dark-gray" type="file" name="file" id="file" /> <input class="w3-button w3-dark-gray" type="submit" value="Upload" onclick="return Upload()" /><br/><br/>
+            <input type="text" id="Input" style="border: 1px solid black;" onkeyup="search()" placeholder="Search"><br/><br/>
+            <button class="w3-button w3-dark-gray" onclick="exportToExcel('result', 'Data')">Download as Excel</button>
+            <button class="w3-button w3-dark-gray" onclick="Export()">Download as PDF</button>
+            <center>
+                <div class="w3-table" id="result"></div>
+            </center>
+        </div><br/><br/>
+
+        <div class="w3-row-padding w3-margin-bottom">
+            <div class="w3-quarter">
+                <div class="w3-container w3-red w3-padding-16">
+                    <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
+                    <div class="w3-right">
+                        <h3>52</h3>
+                    </div>
+                    <div class="w3-clear"></div>
+                    <h4>Messages</h4>
+                </div>
+            </div>
+            <div class="w3-quarter">
+                <div class="w3-container w3-blue w3-padding-16">
+                    <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
+                    <div class="w3-right">
+                        <h3>99</h3>
+                    </div>
+                    <div class="w3-clear"></div>
+                    <h4>Views</h4>
+                </div>
+            </div>
+            <div class="w3-quarter">
+                <div class="w3-container w3-teal w3-padding-16">
+                    <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
+                    <div class="w3-right">
+                        <h3>23</h3>
+                    </div>
+                    <div class="w3-clear"></div>
+                    <h4>Shares</h4>
+                </div>
+            </div>
+            <div class="w3-quarter">
+                <div class="w3-container w3-orange w3-text-white w3-padding-16">
+                    <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+                    <div class="w3-right">
+                        <h3>50</h3>
+                    </div>
+                    <div class="w3-clear"></div>
+                    <h4>Users</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-panel">
+            <div class="w3-row-padding" style="margin:0 -16px">
+                <div class="w3-table">
+                    <h5>Feeds</h5>
+                    <table class="w3-table w3-striped w3-white">
+                        <tr>
+                            <td><i class="fa fa-user w3-text-blue w3-large"></i></td>
+                            <td>New record, over 90 views.</td>
+                            <td><i>10 mins</i></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
+                            <td>Database error.</td>
+                            <td><i>15 mins</i></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-users w3-text-yellow w3-large"></i></td>
+                            <td>New record, over 40 users.</td>
+                            <td><i>17 mins</i></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-comment w3-text-red w3-large"></i></td>
+                            <td>New comments.</td>
+                            <td><i>25 mins</i></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-bookmark w3-text-blue w3-large"></i></td>
+                            <td>Check transactions.</td>
+                            <td><i>28 mins</i></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-laptop w3-text-red w3-large"></i></td>
+                            <td>CPU overload.</td>
+                            <td><i>35 mins</i></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-share-alt w3-text-green w3-large"></i></td>
+                            <td>New shares.</td>
+                            <td><i>39 mins</i></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="w3-container">
+            <h5>General Stats</h5>
+            <p>New Visitors</p>
+            <div class="w3-grey">
+                <div class="w3-container w3-center w3-padding w3-green" style="width:25%">+25%</div>
+            </div>
+
+            <p>New Users</p>
+            <div class="w3-grey">
+                <div class="w3-container w3-center w3-padding w3-orange" style="width:50%">50%</div>
+            </div>
+
+            <p>Bounce Rate</p>
+            <div class="w3-grey">
+                <div class="w3-container w3-center w3-padding w3-red" style="width:75%">75%</div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="w3-container">
+            <h5>Countries</h5>
+            <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+                <tr>
+                    <td>United States</td>
+                    <td>65%</td>
+                </tr>
+                <tr>
+                    <td>UK</td>
+                    <td>15.7%</td>
+                </tr>
+                <tr>
+                    <td>Russia</td>
+                    <td>5.6%</td>
+                </tr>
+                <tr>
+                    <td>Spain</td>
+                    <td>2.1%</td>
+                </tr>
+                <tr>
+                    <td>India</td>
+                    <td>1.9%</td>
+                </tr>
+                <tr>
+                    <td>France</td>
+                    <td>1.5%</td>
+                </tr>
+            </table><br>
+            <button class="w3-button w3-dark-grey">More Countries  <i class="fa fa-arrow-right"></i></button>
+        </div>
+        <hr>
+
+        <br>
+        <div class="w3-container w3-dark-grey w3-padding-32">
+            <div class="w3-row">
+                <div class="w3-container w3-third">
+                    <h5 class="w3-bottombar w3-border-green">Demographic</h5>
+                    <p>Language</p>
+                    <p>Country</p>
+                    <p>City</p>
+                </div>
+                <div class="w3-container w3-third">
+                    <h5 class="w3-bottombar w3-border-red">System</h5>
+                    <p>Browser</p>
+                    <p>OS</p>
+                    <p>More</p>
+                </div>
+                <div class="w3-container w3-third">
+                    <h5 class="w3-bottombar w3-border-orange">Target</h5>
+                    <p>Users</p>
+                    <p>Active</p>
+                    <p>Geo</p>
+                    <p>Interests</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="w3-dark-gray w3-center">
+            <a href="#" class="fa fa-facebook-official fa-2x w3-margin" style="text-decoration: none;"></a>
+            <a href="#" class="fa fa-instagram fa-2x w3-margin" style="text-decoration: none;"></a>
+            <a href="#" class="fa fa-film fa-2x w3-margin" style="text-decoration: none;"></a>
+            <a href="#" class="fa fa-whatsapp fa-2x w3-margin" style="text-decoration: none;"></a>
+            <a href="#" class="fa fa-pinterest-p fa-2x w3-margin" style="text-decoration: none;"></a>
+            <a href="#" class="fa fa-server fa-2x w3-margin" style="text-decoration: none;"></a>
+            <a href="#" class="fa fa-imdb fa-2x w3-margin" style="text-decoration: none;"></a>
+            <a href="#" class="fa fa-sticky-note fa-2x w3-margin" style="text-decoration: none;"></a>
+            <p>© Akshat Goyal</p>
+        </footer>
+
+        <!-- End page content -->
+    </div>
+
+    <script>
+        // Get the Sidebar
+        var mySidebar = document.getElementById("mySidebar");
+
+        // Get the DIV with overlay effect
+        var overlayBg = document.getElementById("myOverlay");
+
+        // Toggle between showing and hiding the sidebar, and add overlay effect
+        function w3_open() {
+            if (mySidebar.style.display === "block") {
+                mySidebar.style.display = "none";
+                overlayBg.style.display = "none";
+            } else {
+                mySidebar.style.display = "block";
+                overlayBg.style.display = "block";
+            }
+        }
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script>
+        function search() {
+            var input, filter, table, tr, td, i, txtValue, j;
+            input = document.getElementById("Input");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("result");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td");
+                if (td) {
+                    for (j = 0; j < td.length; j++) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            break;
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        }
+
+        function Upload() {
+
+            var fileUpload = document.getElementById("file");
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv|.txt)$/;
+            if (regex.test(fileUpload.value.toLowerCase())) {
+                if (typeof(FileReader) != "undefined") {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var table = "<table class=\"w3-center\" id=\"result\">";
+                        var rows = e.target.result.split("\n");
+                        for (var i1 = 0; i1 < 1; i1++) {
+                            table += "<h1>";
+                            for (var j1 = 0; j1 < 1; j1++) {
+                                table += rows[j1];
+                            }
+                            table += "</h1>";
+                        }
+
+                        for (var i1 = 1; i1 < 2; i1++) {
+                            table += "<tr>";
+                            var cells = rows[i1].split(",");
+                            for (var j1 = 0; j1 < cells.length; j1++) {
+                                table += "<th style=\"border: 2px solid black\">" + cells[j1] + "</th>";
+                            }
+                            table += "</tr>";
+                        }
+                        for (var i2 = 2; i2 < rows.length; i2++) {
+                            table += "<tr>";
+                            var cells = rows[i2].split(",");
+                            for (var j2 = 0; j2 < cells.length; j2++) {
+                                table += "<td style=\"border: 1px solid black\">" + cells[j2] + "</td>";
+                            }
+                            table += "</tr>";
+                        }
+                        table += "</table>"
+                        var result = document.getElementById("result");
+                        result.innerHTML = table;
+                        result.appendChild(table);
+
+                    }
+                    reader.readAsText(fileUpload.files[0]);
+                } else {
+                    alert("This browser does not support HTML5.");
+                }
+            } else {
+                alert("Please upload a valid CSV file.");
+            }
+        }
+
+        function exportToExcel(tableID, filename = '') {
+            var downloadurl;
+            var dataFileType = 'application/vnd.ms-excel';
+            var tableSelect = document.getElementById(tableID);
+            var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
+
+            // Specify file name
+            filename = filename ? filename + '.xls' : 'export_excel_data.xls';
+
+            // Create download link element
+            downloadurl = document.createElement("a");
+
+            document.body.appendChild(downloadurl);
+
+            if (navigator.msSaveOrOpenBlob) {
+                var blob = new Blob(['\ufeff', tableHTMLData], {
+                    type: dataFileType
+                });
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                // Create a link to the file
+                downloadurl.href = 'data:' + dataFileType + ', ' + tableHTMLData;
+
+                // Setting the file name
+                downloadurl.download = filename;
+
+                //triggering the function
+                downloadurl.click();
+            }
+        }
+
+        function Export() {
+            html2canvas(document.getElementById('result'), {
+                onrendered: function(canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("Data.pdf");
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>
