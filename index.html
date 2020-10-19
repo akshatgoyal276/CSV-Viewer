@@ -59,10 +59,11 @@
 
         <div class="w3-center">
             <h1>CSV Viewer</h1>
-            <input class="w3-button w3-dark-gray" type="file" name="file" id="file" /> <input class="w3-button w3-dark-gray" type="submit" value="Upload" onclick="return Upload()" /><br/><br/>
+            <input class="w3-button w3-dark-gray" type="file" name="file" id="file" /><button class="w3-button w3-dark-gray" onclick="Upload()">Upload</button><button class="w3-button w3-dark-gray" onclick="setUploadDefault()">Set Default File</button><br/><br/>
             <input type="text" id="Input" style="border: 1px solid black;" onkeyup="search()" placeholder="Search"><br/><br/>
             <button class="w3-button w3-dark-gray" onclick="exportToExcel('result', 'Data')">Download as Excel</button>
             <button class="w3-button w3-dark-gray" onclick="Export()">Download as PDF</button>
+            
             <center>
                 <div class="w3-table" id="result"></div>
             </center>
@@ -384,6 +385,10 @@
                     pdfMake.createPdf(docDefinition).download("Data.pdf");
                 }
             });
+        }
+
+        function setUploadDefault(){
+            document.getElementById("file").value=`./data.txt`;
         }
     </script>
 
